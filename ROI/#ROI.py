@@ -1,12 +1,12 @@
-#TIRA ERROR
-#https://medium.com/analytics-vidhya/ocr-on-region-of-interest-roi-in-image-using-opencv-and-tesseract-a7cab6ff18b3
 #ROI
+#https://medium.com/analytics-vidhya/ocr-on-region-of-interest-roi-in-image-using-opencv-and-tesseract-a7cab6ff18b3
 # Importing necessary libraries
 import numpy as np
 import cv2
 import math
 from scipy import ndimage
 import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r'<full_path_to_your_tesseract_executable>' 
 
 input_img = cv2.imread((r'C:\Users\estev\Desktop\Prueba Tesseract\Factura A.PNG'))
 
@@ -58,12 +58,12 @@ def shape_selection(event, x, y, flags, param):
         coordinates.append((x, y)) 
   
         # Drawing a rectangle around the region of interest (roi)
-        cv2.rectangle(image, coordinates[0], coordinates[1], (0,0,255), 2) 
+        cv2.rectangle(image, coordinates[0], coordinates[1], (0,255,255), 2) 
         cv2.imshow("image", image) 
   
   
 # load the image, clone it, and setup the mouse callback function 
-image = img_rotated
+image = input_img #img_gray
 image_copy = image.copy()
 cv2.namedWindow("image") 
 cv2.setMouseCallback("image", shape_selection) 
@@ -90,7 +90,15 @@ if len(coordinates) == 2:
 # closing all open windows 
 cv2.destroyAllWindows()  
     
-##################################################################### OPTICAL CHARACTER RECOGNITION (OCR) ON ROI
+
+#####################################################################################################
+# OPTICAL CHARACTER RECOGNITION (OCR) ON ROI
+
 text = pytesseract.image_to_string(image_roi)
 print("The text in the selected region is as follows:")
 print(text)
+
+#####################################################################################################
+# SAVING THE TEXT CORRESPONDING TO THE IMAGE INTO A .txt FILE
+with open("Output.txt", "w") as text_file:
+    text_file.write(text)       
