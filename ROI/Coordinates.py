@@ -1,8 +1,7 @@
 import pytesseract
 import cv2
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
-
-image = cv2.imread(r'C:\Users\estev\Desktop\Prueba Tesseract\Codigos\serviceContabilium\Factura B1.PNG')
+image = cv2.imread((r'C:\Users\estev\Desktop\Prueba Tesseract\Codigos\serviceContabilium\Factura A.PNG')) #Asignarle una imagen a una variable
 
 coordinates = [] 
   
@@ -28,10 +27,11 @@ if len(coordinates) == 2:
     image_roi = image_copy[coordinates[0][1]:coordinates[1][1], 
                                coordinates[0][0]:coordinates[1][0]] 
     cv2.imshow("Selected Region of Interest - Press any key to proceed", image_roi) 
-    cv2.waitKey(0)  
-
+    cv2.waitKey(0) 
+  
 cv2.destroyAllWindows()  
     
 text = pytesseract.image_to_string(image_roi)
 print("The text in the selected region is as follows:")
 print(text)
+
