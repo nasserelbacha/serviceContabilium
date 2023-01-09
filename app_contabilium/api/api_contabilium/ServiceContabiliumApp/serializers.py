@@ -1,17 +1,28 @@
 from rest_framework import serializers
-# from ServiceContabiliumApp.models import Users, Proveedor, Image
+from . import models
+from rest_framework.fields import CharField, EmailField, BooleanField, IntegerField, SlugField
 
-# class UsersSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Users
-#         fields = ('userId', 'name', 'lastName', 'email', 'password')
+class TypeDocSerializer(serializers.ModelSerializer):
+    name = CharField(required=True)
+    class Meta:
+        model = models.TypeDoc
+        fields = ('name',)
+        
+class CompanySerializer(serializers.ModelSerializer):
+    email = EmailField(required=True)
+    password = CharField(required=True)
+    class Meta:
+        model = models.Companies
+        fields = ('email', 'password')
 
-# class ProovedorSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Proveedor
-#         fields = ('proovedorId', 'user_id', 'coordenadas_x', 'coordenadas_y', 'name')
-
-# class ImageSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Image
-#         fields = ('id', 'image', 'user_id', 'proveedor_id')
+class EmployeeSerializer(serializers.ModelSerializer):
+    email = EmailField(required=True)
+    name = CharField(required=True)
+    lastNamess = CharField(required=True)
+    password = CharField(required=True)
+    isAdmin = BooleanField(required=True)
+    
+    class Meta:
+        model = models.Employees
+        fields = ('name', 'lastNamess','email', 'password', 'isAdmin')
+    
