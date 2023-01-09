@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from rest_framework.fields import CharField, EmailField, BooleanField, IntegerField, SlugField
+from rest_framework.fields import CharField, EmailField, BooleanField, IntegerField, Field
 
 class TypeDocSerializer(serializers.ModelSerializer):
     name = CharField(required=True)
@@ -18,11 +18,13 @@ class CompanySerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     email = EmailField(required=True)
     name = CharField(required=True)
-    lastNamess = CharField(required=True)
+    lastNames = CharField(required=True)
     password = CharField(required=True)
     isAdmin = BooleanField(required=True)
+    # company = serializers.RelatedField(source='company',many=True)
+
     
     class Meta:
         model = models.Employees
-        fields = ('name', 'lastNamess','email', 'password', 'isAdmin')
+        fields = ('name', 'lastNames','email', 'password', 'isAdmin')
     

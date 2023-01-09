@@ -9,9 +9,9 @@ from . import models
 # Create your views here.
 
 class TypeDocView(views.APIView):    
-    def get(self, request, id=0):
-        if (id > 0):
-            docs = list(models.TypeDoc.objects.filter(id=id).values())
+    def get(self, request, **id):
+        if (id):
+            docs = list(models.TypeDoc.objects.filter(id=id['id']).values())
             if len(docs) > 0:
                 typeDoc = docs[0]
                 datos = {'message': "Success", 'typeDoc': typeDoc}
@@ -39,19 +39,19 @@ class TypeDocView(views.APIView):
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
 
 class CompaniesView(views.APIView):
-    def get(self, request, id=0):
-        if (id > 0):
-            companies = list(models.Companies.objects.filter(id=id).values())
+    def get(self, request, **id):
+        if (id):
+            companies = list(models.Companies.objects.filter(id=id['id']).values())
             if len(companies) > 0:
                 company= companies[0]
-                datos = {'message': "Success", 'typeDoc': company}
+                datos = {'message': "Success", 'company': company}
             else:
-                datos = {'message': "typeDoc not found..."}
+                datos = {'message': "company not found..."}
             return JsonResponse(datos)
         else:
             companies = list(models.Companies.objects.values())
             if len(companies) > 0:
-                datos = {'message': "Success", 'company': companies}
+                datos = {'message': "Success", 'companies': companies}
             else:
                 datos = {'message': "docs not found..."}
             return JsonResponse(datos)
@@ -68,13 +68,20 @@ class CompaniesView(views.APIView):
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
         
 class EmployeesView(views.APIView):
-    def get(self, request, id):
-        pass
+    def get(self, request, **id):
+        try:
+            employees = list(models.Employees.objects.filter(company=id).values())
+            if len(employees) > 0:
+                data = {'message': 'Success', 'employees': employees}
+            else: 
+                data = {'message': 'dont employees'}
+            return JsonResponse(data)
+        except JSONDecodeError:
+            return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
     def post(self, request):
         try:
             data = JSONParser().parse(request)
             data['company'] = models.Companies.objects.get(id = data['company'])
-            print(data)
             serializer = EmployeeSerializer(data=data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
