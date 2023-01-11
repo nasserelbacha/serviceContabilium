@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from json import JSONDecodeError
 from django.http import JsonResponse
 from .serializers import TypeDocSerializer, CompanySerializer, EmployeeSerializer
@@ -6,38 +5,6 @@ from rest_framework.parsers import JSONParser
 from rest_framework import views, status
 from rest_framework.response import Response
 from . import models
-=======
-from django.shortcuts import render
-from django.views import View
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from django.http.response import JsonResponse
-from .models import TypeDoc
-
-# from ServiceContabiliumApp.models import Users, Proveedor, Image
-# from ServiceContabiliumApp.serializers import UsersSerializer,ProovedorSerializer, ImageSerializer
-
-from django.core.files.storage import default_storage
-from django.utils.decorators import method_decorator
-
-class TypeDocView(View):
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-        
-    def get(self, request):
-        Types= list(TypeDoc.objects.values())
-        if len(Types)>0:
-            datos = {'message':'Success', 'Types':Types}
-        else:
-            datos = {'message': 'Types not found'}
-        return JsonResponse(datos)
-        
-    def post(self, request):
-        datos = {'message':'Success'}
-        return JsonResponse(datos)
->>>>>>> develop
 
 # Create your views here.
 
