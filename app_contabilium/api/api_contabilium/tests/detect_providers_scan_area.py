@@ -10,26 +10,6 @@ def convert_pdf(pdf_path, save_dir):
     for i in range (len(images)):
         images[i].save(f"{save_dir}/"+ f"{name}_{i}" + ".png","PNG")
 
-#def readimage(image_path):
-    #Image = cv2.imread(image_path)
-    #ROI = Image[60:400 , 80:1600]
-    #cv2.imshow("Facturar A", ROI)
-    #cv2.waitKey(0)
-    #text = (pytesseract.image_to_string(ROI))
-    
-    
-    #word = "CUIT:"
-    #position = text.find(word)
-    #if position != -1:
-        #following_text = text[position + len(word): position + len(word) + 14 ]
-        #print(following_text)
-    #else:
-        #word = "C.U.I.T.: " 
-        #position = text.find(word)
-        #if position != -1:
-            #following_text = text[position + len(word): position + len(word) + 13]
-            #print(following_text)
-
 def readimage(image_path):
     Image = cv2.imread(image_path)
     y = 350
