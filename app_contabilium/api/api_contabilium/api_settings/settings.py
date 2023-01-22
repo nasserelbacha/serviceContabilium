@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'corsheaders',
     'ServiceContabiliumApp.apps.ServicecontabiliumappConfig'
 ]
@@ -56,6 +58,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    # "NON_FIELD_ERRORS_KEY": "errors",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        # "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated"),
+    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    # "PAGE_SIZE": 3,
+}
 
 ROOT_URLCONF = 'api_settings.urls'
 
@@ -130,6 +144,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 
