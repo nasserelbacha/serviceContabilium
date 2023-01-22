@@ -3,6 +3,8 @@ from . import views
 from django.conf.urls.static import static
 from .views import TypeDocView, CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser
 from django.conf import settings
+from django.urls import path, include 
+from . import views
 
 
 
