@@ -6,16 +6,20 @@ import uuid
 
 class Companies(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False, unique=True)
-    email = models.EmailField(max_length=233, default='hola@gmail.com')
+    email = models.EmailField(max_length=233, default='hola@gmail.com', unique=True)
+    name = models.CharField(max_length=233, default='', unique=True)
     password = models.CharField(max_length=233, default='')
+    cuilt = models.CharField(max_length=233, default='', unique=True)
+    enabled = models.BooleanField(default=False)
 
 class Employees(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=233, default='')
     lastNames = models.CharField(max_length=233, default='')
-    email = models.EmailField(max_length=233, default='hola@gmail.com')
+    email = models.EmailField(max_length=233, default='hola@gmail.com', unique=True)
     password = models.CharField(max_length=233, default='')
     isAdmin = models.BooleanField(default=False)
+    enabled = models.BooleanField(default=False)
     company = models.ForeignKey(Companies, on_delete= models.CASCADE)
 
 class Providers(models.Model):
@@ -35,7 +39,6 @@ class Bill(models.Model):
     coordate_x = models.IntegerField(default=1)
     coordate_y = models.IntegerField(default=1)
     provider = models.ForeignKey(Providers, on_delete= models.CASCADE)
-    company = models.ForeignKey(Companies, on_delete= models.CASCADE)
     info = models.CharField(max_length=233, default='')
 
     

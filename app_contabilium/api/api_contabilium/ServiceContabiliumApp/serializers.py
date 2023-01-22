@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from rest_framework.fields import CharField, EmailField, BooleanField, IntegerField, Field
+from rest_framework.fields import CharField, EmailField, BooleanField, IntegerField, UUIDField
 
 class TypeDocSerializer(serializers.ModelSerializer):
     name = CharField(required=True)
@@ -11,9 +11,11 @@ class TypeDocSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     email = EmailField(required=True)
     password = CharField(required=True)
+    name = CharField(required=True)
+    cuilt = CharField(required=True)
     class Meta:
         model = models.Companies
-        fields = ('email', 'password')
+        fields = ('email', 'password', "name", "cuilt")
 
 class EmployeeSerializer(serializers.ModelSerializer):
     email = EmailField(required=True)
@@ -21,10 +23,17 @@ class EmployeeSerializer(serializers.ModelSerializer):
     lastNames = CharField(required=True)
     password = CharField(required=True)
     isAdmin = BooleanField(required=True)
-    # company = serializers.RelatedField(source='company',many=True)
+    company = UUIDField(required=True)
 
     
     class Meta:
         model = models.Employees
-        fields = ('name', 'lastNames','email', 'password', 'isAdmin')
+        fields = ('name', 'lastNames','email', 'password', 'isAdmin', 'company')
+    
+
+# class AuthenticationSerializer(serializers.ModelSerializer):
+#     email = EmailField()
+#     password = CharField(required=True)
+#     findEmail = models.Companies.objects.filter(email=email).values()
+#     print(findEmail)
     
