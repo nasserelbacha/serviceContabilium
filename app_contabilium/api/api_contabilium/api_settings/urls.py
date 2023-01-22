@@ -17,14 +17,11 @@ from django.contrib import admin
 from django.urls import path,include
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('core/',include('ServiceContabiliumApp.urls'))
-=======
-    path('ServiceContabiliumApp/', include("ServiceContabiliumApp.urls"))
-    # path('core/',include('ServiceContabiliumApp.urls'))
->>>>>>> develop
+    path('core/',include('ServiceContabiliumApp.urls')),
+    path('', include('ServiceContabiliumApp.urls'))
 ]
 
 

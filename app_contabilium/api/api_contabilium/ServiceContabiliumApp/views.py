@@ -5,7 +5,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework import views, status
 from rest_framework.response import Response
 from . import models
-
+from django.http import HttpResponse
+from django.shortcuts import render
 # Create your views here.
 
 class TypeDocView(views.APIView):    
@@ -83,3 +84,7 @@ class EmployeesView(views.APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except JSONDecodeError:
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
+
+
+def home(request):
+    return HttpResponse("hello I am working")
