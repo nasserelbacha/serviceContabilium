@@ -4,6 +4,7 @@ import os
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 from pdf2image import convert_from_path
 
+
 def convert_pdf(pdf_path, save_dir):
     images = convert_from_path(pdf_path, poppler_path = r"C:\Program Files (x86)\poppler-22.12.0\Library\bin")
     name = (os.path.basename(pdf_path))
@@ -12,8 +13,12 @@ def convert_pdf(pdf_path, save_dir):
 
 def readimage(image_path):
     Image = cv2.imread(image_path)
+    #y = "60:350"
+    #y = y.split(":")
+    #y1 = int(y[0])
+    #y2 = int(y[1])
     y = 350
-    ROI = Image[60:y , 80:1600]
+    ROI = Image[60:y, 80:1600]
     text = (pytesseract.image_to_string(ROI))
     contador = 0
     while contador == 0:
@@ -32,7 +37,7 @@ def readimage(image_path):
                 contador = contador + 1
             else:
                 y = y + 10
-                ROI = Image[60:y , 80:1600]
+                ROI = Image[60:y2 , 80:1600]
                 text = (pytesseract.image_to_string(ROI))
 
     numeros = ""
@@ -72,8 +77,8 @@ readimage (r"C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_c
 convert_pdf("C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/Icepar  72891_115107-0001-0015-CEA-0000106920.pdf", "C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas")
 readimage (r"C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/Icepar  72891_115107-0001-0015-CEA-0000106920.pdf_0.PNG")
 
-#No anduvo convert_pdf("C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/New Clevers FACA0000200021361.pdf", "C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas")
-#No anduvo readimage (r"C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/New Clevers FACA0000200021361.pdf_0.PNG")
+# #No anduvo convert_pdf("C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/New Clevers FACA0000200021361.pdf", "C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas")
+# #No anduvo readimage (r"C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/New Clevers FACA0000200021361.pdf_0.PNG")
 
 convert_pdf("C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/NC  A0010-00002302  Ar accesorios.pdf", "C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas")
 readimage (r"C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/NC  A0010-00002302  Ar accesorios.pdf_0.PNG")
