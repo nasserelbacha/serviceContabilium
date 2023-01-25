@@ -7,7 +7,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 
 # ORIENTATION CORRECTION/ADJUSTMENT
 
-input_img = cv2.imread((r'../Factura A.png'))
+input_img = cv2.imread(r"C:/Users/estev/Desktop/serviceContabilium/app_contabilium/api/api_contabilium/tests/facturas/Presmar 000299_20211110_CA12-00005064.pdf_1.png")
 
 def orientation_correction(img, save_image = False):
     # GrayScale Conversion for the Canny Algorithm  
