@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from . import views
 from django.conf.urls.static import static
-from .views import TypeDocView, CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser
+from .views import TypeDocView, CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser, UpdateRoleToUser
 from django.conf import settings
 from django.urls import path, include 
 from . import views
@@ -26,6 +26,7 @@ urlpatterns = [
     path('auth/employee', AuthEmployee.as_view(), name='login_employee'),
     path('logout', LogoutView.as_view(), name='logout' ),
     path("companies/activate/<str:email>", ActivateCompany.as_view(), name='activate_company'),
-    path("employee/activate/<str:email>", ActivateUser.as_view(), name='activate_employee')
+    path("employee/activate/<str:email>", ActivateUser.as_view(), name='activate_employee'),
+    path("employee/change-role/<str:email>", UpdateRoleToUser.as_view(), name='role_employee')
     
 ]
