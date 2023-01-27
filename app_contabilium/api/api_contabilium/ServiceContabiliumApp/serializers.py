@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from . import models
+
 from rest_framework.fields import CharField, EmailField, BooleanField, IntegerField, UUIDField
 
 class TypeDocSerializer(serializers.ModelSerializer):

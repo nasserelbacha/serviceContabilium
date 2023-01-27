@@ -6,9 +6,9 @@ import cv2
 import math
 from scipy import ndimage
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r'<full_path_to_your_tesseract_executable>' 
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-input_img = cv2.imread((r'C:\Users\estev\Desktop\Prueba Tesseract\Factura A.PNG'))
+input_img = cv2.imread((r'C:\Users\nasse\OneDrive\Documentos\NASSER\Contabilium\serviceContabilium\app_contabilium\api\api_contabilium\tests\image_1.png'))
 
 # ORIENTATION CORRECTION/ADJUSTMENT
 
