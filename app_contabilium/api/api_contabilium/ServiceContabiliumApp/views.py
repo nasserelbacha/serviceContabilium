@@ -137,7 +137,7 @@ class AuthEmployee(views.APIView):
 class ActivateCompany(views.APIView):
     def patch(self, request, email):
         try:
-           return companiesActions.activateCompany(self, request)
+           return companiesActions.activateCompany(self, request, email)
         except JSONDecodeError:
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)   
         

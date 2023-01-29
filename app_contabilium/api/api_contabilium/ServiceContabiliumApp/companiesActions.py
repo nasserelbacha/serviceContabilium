@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from . import models
 from .serializers import CompanySerializer
 from django.http import JsonResponse
+from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 import jwt, datetime
@@ -40,7 +41,7 @@ def createCompany(self, request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def activateCompany(self, request):
+def activateCompany(self, request, email):
 # data = JSONParser().parse(request)
     company = models.Companies.objects.get(email=email)
     if not company:
