@@ -1,16 +1,13 @@
 from django.urls import path, re_path
 from . import views
 from django.conf.urls.static import static
-from .views import TypeDocView, CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser, UpdateRoleToUser
+from .views import CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser, UpdateRoleToUser, CoordinatesById, CoordinatesViews, BillInfo, BillInfoById
 from django.conf import settings
 from django.urls import path, include 
 from . import views
 
 
-
 urlpatterns = [
-    path('typesDoc/', TypeDocView.as_view(), name='type_doc_list'),
-    path('typesDoc/<str:id>', TypeDocView.as_view(), name='type_doc_process'),
     path('companies', CompaniesView.as_view(), name='companies_list'),
     path('companies/<str:id>', CompaniesView.as_view(), name='companies_process'),
     path('companies/<str:id>/employees', EmployeesView.as_view(), name='employees_list'),
@@ -27,6 +24,9 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout' ),
     path("companies/activate/<str:email>", ActivateCompany.as_view(), name='activate_company'),
     path("employee/activate/<str:email>", ActivateUser.as_view(), name='activate_employee'),
-    path("employee/change-role/<str:email>", UpdateRoleToUser.as_view(), name='role_employee')
-    
+    path("employee/change-role/<str:email>", UpdateRoleToUser.as_view(), name='role_employee'),
+    path('companies/providers/bill/<str:id>/info', BillInfo.as_view(), name="bill_info"),
+    path('companies/providers/bill/info/<str:id>', BillByIdView.as_view(), name="bill_process"),
+    path('companies/providers/<str:id>/coordinates', CoordinatesViews.as_view(), name="coordinates_list"),
+    path('companies/providers/coordinates/<str:id>', CoordinatesById.as_view(), name="coordinates_proccess"),
 ]

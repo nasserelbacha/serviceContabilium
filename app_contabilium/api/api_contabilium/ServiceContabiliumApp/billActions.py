@@ -15,14 +15,10 @@ def getBills(self, request, **args):
 def createBill(self, request, **args):
     jd = json.loads(request.body)
     provider = models.Providers.objects.get(id=jd['provider'])
-    typeDoc = models.TypeDoc.objects.get(id=jd['typedoc'])
-    if  provider and typeDoc:
+    if  provider:
         models.Bill.objects.create(name=jd['name'],
-                                    typedoc=typeDoc,
-                                    coordate_x=jd['coordatex'],
-                                    coordate_y=jd['coordatey'],
                                     provider=provider,
-                                    info=jd['info'])
+                                    )
         return Response(jd)
     else:
         return JsonResponse({"result": "error", "message" : "mala aplicacion"})
