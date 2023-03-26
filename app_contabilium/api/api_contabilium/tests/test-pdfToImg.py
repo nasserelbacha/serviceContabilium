@@ -1,15 +1,13 @@
-import PyPDF2
+import fitz  # PyMuPDF, imported as fitz for backward compatibility reasons
 
 def pdf2File():
-    pdfFileObj = open('test_factura.pdf', 'rb')
-    pdf = PyPDF2.PdfReader(pdfFileObj)
-    print(pdf.pages)
-    # creating a page object
-    pageObj = pdf.pages[0]
-    text = pageObj.extract_text()
-    file1 = open("1","a")
-    file1.writelines(text)
-    pdfFileObj.close()
+    doc = fitz.open(file_path)  # open document
+    for page in doc:
+        pix = page.get_pixmap()  # render page to an image
+        pix.save(f"page_{i}.png")
     
 
 pdf2File()
+
+
+
