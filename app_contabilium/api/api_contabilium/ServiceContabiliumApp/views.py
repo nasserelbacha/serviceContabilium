@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from json import JSONDecodeError
 import jwt, datetime
-from . import typeDocActions
 from . import companiesActions
 from . import employeesActions
 from . import proovidersActions
@@ -105,7 +104,7 @@ class BillByIdView(views.APIView):
         checkHasRole(request)
         try:
             return billActions.getBillById(self, request, id)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
         
 class BillInfo(views.APIView):
@@ -113,14 +112,14 @@ class BillInfo(views.APIView):
         checkIfUserIsAutheticated(request)
         try:
             return billInfoActions.getInfo(self, request, **args)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
     def post(self, request, **args):
         checkIfUserIsAutheticated(request)
         try:
             return billInfoActions.createInfo(self, request, **args)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
 class BillInfoById(views.APIView):       
@@ -128,7 +127,7 @@ class BillInfoById(views.APIView):
         checkIfUserIsAutheticated(request)
         try:
             return billInfoActions.updateInfo(self, request, id)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
 
 class CoordinatesViews(views.APIView):
@@ -180,7 +179,18 @@ class ActivateCompany(views.APIView):
         try:
            return companiesActions.activateCompany(self, request, email)
         except JSONDecodeError:
-            return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)   
+            return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)  
+    
+
+class Pdf2Image(views.APIView):
+    def post(self, request, **args):
+        checkIfUserIsAutheticated(request)
+        try:
+            print(self)
+            print(request)
+            return billActions.pdf2Image(self, request, **args)
+        except JSONDecodeError:
+            return JSONDecodeError({"result": "error","message": "Json decoding error"}, status= 400)  
         
         
 class ActivateUser(views.APIView):

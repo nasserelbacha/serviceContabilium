@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from . import views
 from django.conf.urls.static import static
-from .views import CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser, UpdateRoleToUser, CoordinatesById, CoordinatesViews, BillInfo, BillInfoById
+from .views import CompaniesView, EmployeesView, ProovidersView, ProovidersByIdView, EmployeeByIdView, BillView, BillByIdView, AuthCompany, LogoutView, AuthEmployee, ActivateCompany, ActivateUser, UpdateRoleToUser, CoordinatesById, CoordinatesViews, BillInfo, BillInfoById, Pdf2Image
 from django.conf import settings
 from django.urls import path, include 
 from . import views
@@ -29,4 +29,5 @@ urlpatterns = [
     path('companies/providers/bill/info/<str:id>', BillByIdView.as_view(), name="bill_process"),
     path('companies/providers/<str:id>/coordinates', CoordinatesViews.as_view(), name="coordinates_list"),
     path('companies/providers/coordinates/<str:id>', CoordinatesById.as_view(), name="coordinates_proccess"),
+    path('companies/providers/file/pdfFile', Pdf2Image.as_view(), name="pdf_proccess")
 ]

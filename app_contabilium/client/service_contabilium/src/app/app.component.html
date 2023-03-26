@@ -1,7 +1,6 @@
-<input style="display: none" type="file" accept=".pdf, .png" (change)="onFileChanged($event)" #fileInput >
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
 
-<button (click)="fileInput.click()">
-  Añadir imagen
-</button>
-
-<img [src]="cardImageBase64"/>
+<router-outlet>
+    <app-spinner></app-spinner>
+</router-outlet>

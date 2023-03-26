@@ -3,6 +3,14 @@ from . import models
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 import json
+import pytesseract
+import cv2
+import os
+import urllib.request
+import base64
+import numpy as np
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+from pdf2image import convert_from_path
 
 def getCoordinates(self, request, **args):
     coordinates = list(models.Coordinates.objects.filter(provider=args['providerId']).values()) 
@@ -47,4 +55,39 @@ def updateCoordinate(self, request, id):
     else:
         datos = {'message': 'coordinate not found...'}
         return JsonResponse(datos)
+    
+    
+
+def readimage(image_path):
+    codigo_base64 = ""
+    imagen_bytes = base64.b64decode(codigo_base64)
+    imagen_numpy = np.frombuffer(imagen_bytes, np.uint8)
+    Image = cv2.imdecode(imagen_numpy, cv2.IMREAD_COLOR)
+    Image = cv2.imread(image_path)
+    y = 350
+    ROI = Image[60:y, 80:1600]
+    text = (pytesseract.image_to_string(ROI))
+    contador = 0
+    while contador == 0:
+         word = "CUIT:"
+         position = text.find(word)
+         if position != -1:
+            following_text = text[position + len(word): position + len(word) + 18]
+            contador = contador + 1
+         else:
+            word = "C.U.I.T." 
+            position = text.find(word)
+            if position != -1:
+                following_text = text[position + len(word): position + len(word) + 18]
+                contador = contador + 1
+            else:
+                y = y + 10
+                ROI = Image[60:y , 80:1600]
+                text = (pytesseract.image_to_string(ROI))
+
+    numeros = ""
+    for caracter in following_text:
+        if caracter.isdigit():
+            numeros += caracter
+    print(numeros)
     
