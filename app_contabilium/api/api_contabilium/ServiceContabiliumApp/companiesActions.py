@@ -78,10 +78,11 @@ def authCompany(self, request):
     token = jwt.encode(payload, 'secret', algorithm='HS256')
     role = findCompany['role']
     response = Response()
-    response.set_cookie(key='jwt', value=token, httponly=True)
-    response.set_cookie(key='role', value=role, httponly=True)
+    # response.set_cookie(key='jwt', value=token, httponly=True)
+    # response.set_cookie(key='role', value=role, httponly=True)
     response.data = {
-        'jwt': token
+        'jwt': token,
+        'role': role
     }
     return response
 

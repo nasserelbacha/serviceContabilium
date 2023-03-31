@@ -1,0 +1,42 @@
+.class1 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .class2 {
+    width: 50px;
+    opacity: 0.5;
+    margin-bottom: 60px;
+    filter: grayscale(100%);
+  }
+  .class3 {
+    text-align: center;
+    margin-top: -30px;
+  }
+  .class4 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .class5 {
+    color: rgb(119, 119, 119);
+    margin-bottom: 30px;
+  }
+  .class6 {
+    overflow-wrap: anywhere;
+    color: #a09898;
+  }
+  .class7 {
+    display: flex;
+    justify-content: center;
+    margin-left: 40px;
+    margin-bottom: 5px;
+  }
+  .class8 {
+    background-color: #66b2ff;
+    color: white;
+  }
+  .class9 {
+    background-color: #66b2ff;
+    color: white;
+  }
+  

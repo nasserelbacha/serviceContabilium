@@ -1,0 +1,20 @@
+.input-group > .form-control, .input-group > .form-control-plaintext {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    margin-bottom: 0;
+    height: 40px;
+    font-size: 13px;
+    padding: 10px;
+    margin-bottom: 3%;
+}
+
+.log-in-btn{
+    margin-bottom: 10px ; width: 100% ; background: #0092ff; color: white;
+}
+
+.login-error{
+    color: red;
+    margin-top: 20px;
+}

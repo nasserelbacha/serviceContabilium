@@ -1,6 +1,7 @@
 from rest_framework import views, status
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from django.http import JsonResponse
 from json import JSONDecodeError
 import jwt, datetime
 from . import companiesActions
@@ -10,18 +11,28 @@ from . import billActions
 from . import billInfoActions
 from . import coordinatesActions
 
+def checkAuthorization(request, role):
+    res = request.headers['Authorization']
+    responses = res.split(';')
+    checkIfUserIsAutheticated(responses[0])
+    if role == 'manager':
+        checkRoleManager(responses[1])
+    if role == 'employee':
+        checkHasRole(responses[1])
+        
+
 def checkIfUserIsAutheticated(request):
-    token = request.COOKIES.get('jwt')
+    token = request
     if not token:
         raise AuthenticationFailed('Unauthenticated!', 401)
 
 def checkRoleManager(request):
-    role = request.COOKIES.get('role')
+    role = request
     if role != "ROLE_MANAGER":
         raise ValidationError("permission denied", 401)    
 
 def checkHasRole(request):
-    role = request.COOKIES.get('role')
+    role = request
     if role!= "ROLE_EMPLOYEE" and role!="ROLE_MANAGER":
         raise ValidationError("permission denied", 401)
 
@@ -36,8 +47,7 @@ class CompaniesView(views.APIView):
         
 class EmployeesView(views.APIView):
     def get(self, request, **id):
-        checkIfUserIsAutheticated(request)
-        checkRoleManager(request)
+        checkAuthorization(request, 'manager')
         try:
             return employeesActions.getEmployees(self, request, **id)
         except JSONDecodeError:
@@ -51,8 +61,7 @@ class EmployeesView(views.APIView):
 
 class EmployeeByIdView(views.APIView):
     def get(self, request, id):
-        checkIfUserIsAutheticated(request)
-        checkRoleManager(request)
+        checkAuthorization(request, 'manager')
         try:
            return employeesActions.getEmployeeById(self, request, id)
         except JSONDecodeError:
@@ -60,8 +69,7 @@ class EmployeeByIdView(views.APIView):
  
 class ProovidersView(views.APIView):
     def get(self, request, **id):
-        checkIfUserIsAutheticated(request)
-        checkHasRole(request)
+        checkAuthorization(request, 'employee')
         try:    
             return proovidersActions.getProviders(self, request, **id)
         except JSONDecodeError:
@@ -75,8 +83,7 @@ class ProovidersView(views.APIView):
         
 class ProovidersByIdView(views.APIView):
     def get(self, request, id):
-        checkIfUserIsAutheticated(request)
-        checkHasRole(request)
+        checkAuthorization(request, 'employee')
         try:                
            return proovidersActions.getProviderById(self, request, id)
         except JSONDecodeError:
@@ -84,15 +91,13 @@ class ProovidersByIdView(views.APIView):
             
 class BillView(views.APIView):
     def get(self, request, **args,):
-        checkIfUserIsAutheticated(request)
-        checkHasRole(request)
+        checkAuthorization(request, 'employee')
         try:
             return billActions.getBills(self, request, **args) 
         except JSONDecodeError:
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
     def post(self, request, **id):
-        checkIfUserIsAutheticated(request)
-        checkHasRole(request)
+        checkAuthorization(request, 'employee')
         try:
             return billActions.createBill(self, request, **id)
         except ValueError:
@@ -100,8 +105,7 @@ class BillView(views.APIView):
 
 class BillByIdView(views.APIView):
     def get(self, request, id):
-        checkIfUserIsAutheticated(request)
-        checkHasRole(request)
+        checkAuthorization(request, 'employee')
         try:
             return billActions.getBillById(self, request, id)
         except JSONDecodeError:
@@ -109,14 +113,14 @@ class BillByIdView(views.APIView):
         
 class BillInfo(views.APIView):
     def get(self, request, **args):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return billInfoActions.getInfo(self, request, **args)
         except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
     def post(self, request, **args):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return billInfoActions.createInfo(self, request, **args)
         except JSONDecodeError:
@@ -124,7 +128,7 @@ class BillInfo(views.APIView):
     
 class BillInfoById(views.APIView):       
     def patch(self, request, id):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return billInfoActions.updateInfo(self, request, id)
         except JSONDecodeError:
@@ -132,14 +136,14 @@ class BillInfoById(views.APIView):
 
 class CoordinatesViews(views.APIView):
     def get(self, request, **args):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return coordinatesActions.getCoordinates(self, request, **args)
         except JSONDecodeError(datos):
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
     def post(self, request, **args):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return coordinatesActions.createCoordinate(self, request, **args)
         except JSONDecodeError(datos):
@@ -147,14 +151,14 @@ class CoordinatesViews(views.APIView):
 
 class CoordinatesById(views.APIView):
     def get(self, request, id):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return coordinatesActions.getCoordinateById(self, request, id)
         except JSONDecodeError(datos):
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
     def patch(self, request, id):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             return coordinatesActions.updateCoordinate(self, request, id)
         except JSONDecodeError(datos):
@@ -184,7 +188,7 @@ class ActivateCompany(views.APIView):
 
 class Pdf2Image(views.APIView):
     def post(self, request, **args):
-        checkIfUserIsAutheticated(request)
+        checkAuthorization(request, 'employee')
         try:
             print(self)
             print(request)
@@ -196,8 +200,7 @@ class Pdf2Image(views.APIView):
 class ActivateUser(views.APIView):
     def patch(self, request, email):
         try:
-            checkIfUserIsAutheticated(request)
-            checkRoleManager(request)
+            checkAuthorization(request, 'manager')
             return employeesActions.activateEmployee(self, request, email)
         except JSONDecodeError:
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)     
@@ -205,8 +208,7 @@ class ActivateUser(views.APIView):
 class UpdateRoleToUser(views.APIView):
     def patch(self, request, email):
         try:
-            checkIfUserIsAutheticated(request)
-            checkRoleManager(request)
+            checkAuthorization(request, 'manager')
             return employeesActions.updateEmployeeRole(self, request, email)
         except JSONDecodeError:
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)     
