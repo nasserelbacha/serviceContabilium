@@ -1,0 +1,37 @@
+<div style="padding: 30px;">
+    <div class="d-flex w-100" style="justify-content: center;">
+        <h4>Bienvenido a ProccesFy</h4>
+        <!-- <div class="d-flex justify-content-end">
+            <span (click)="close()" class="closeDialog">X</span>
+        </div> -->
+    </div>
+    
+    <div class="mt-3">
+        <form [formGroup]="loginForm">
+            <div class="input-group">
+                <input type="email" formControlName="companyEmail" class="form-control" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && form['companyEmail'].errors }">
+                <div *ngIf="submitted &&  form['companyEmail'].errors" class="invalid-feedback">
+                    <div *ngIf=" form['companyEmail'].errors['required']">Necesita poner un email</div>
+                  </div>
+                  <span class="md-line"></span>
+            </div>
+            <div class="input-group">
+                <input type="password" formControlName="companyPassword" class="form-control" placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && form['companyPassword'].errors }">
+                <div *ngIf="submitted &&  form['companyPassword'].errors" class="invalid-feedback">
+                    <div *ngIf=" form['companyPassword'].errors['required']">Necesita poner una constraseña</div>
+                  </div>
+                  <span class="md-line"></span>
+            </div>
+            <button mat-button [disabled]="loading" (click)="onSubmit()" class="log-in-btn">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Ingresar</button>
+            <div *ngIf="error" class="alert alert-danger background-danger" class="login-error">
+                {{error}}
+              </div>
+        </form>
+    </div>
+</div>
+
+<!-- <div>
+    <span>Soy empleado</span>
+</div> -->

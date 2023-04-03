@@ -30,6 +30,7 @@ def createCoordinate(self, request, **args):
                                     x2=jd['x2'],
                                     y1=jd['y1'],
                                     y2=jd['y2'])
+        readimage(jd)
         return Response(jd)
     else:
         return JsonResponse({"result": "error", "message" : "mala aplicacion"})
@@ -58,9 +59,9 @@ def updateCoordinate(self, request, id):
     
     
 
-def readimage(image_path):
+def readimage(body):
     codigo_base64 = ""
-    imagen_bytes = base64.b64decode(codigo_base64)
+    imagen_bytes = base64.b64decode(body['base64'])
     imagen_numpy = np.frombuffer(imagen_bytes, np.uint8)
     Image = cv2.imdecode(imagen_numpy, cv2.IMREAD_COLOR)
     Image = cv2.imread(image_path)
