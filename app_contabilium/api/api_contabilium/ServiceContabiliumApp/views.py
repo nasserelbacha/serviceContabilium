@@ -9,6 +9,7 @@ from . import proovidersActions
 from . import billActions
 from . import billInfoActions
 from . import coordinatesActions
+from django.http import JsonResponse
 
 def checkIfUserIsAutheticated(request):
     token = request.COOKIES.get('jwt')
@@ -135,14 +136,14 @@ class CoordinatesViews(views.APIView):
         checkIfUserIsAutheticated(request)
         try:
             return coordinatesActions.getCoordinates(self, request, **args)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
     def post(self, request, **args):
         checkIfUserIsAutheticated(request)
         try:
             return coordinatesActions.createCoordinate(self, request, **args)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
 
 class CoordinatesById(views.APIView):
@@ -150,14 +151,14 @@ class CoordinatesById(views.APIView):
         checkIfUserIsAutheticated(request)
         try:
             return coordinatesActions.getCoordinateById(self, request, id)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)
     
     def patch(self, request, id):
         checkIfUserIsAutheticated(request)
         try:
             return coordinatesActions.updateCoordinate(self, request, id)
-        except JSONDecodeError(datos):
+        except JSONDecodeError:
             return JsonResponse({"result": "error", "message": "Json decoding error"}, status=400)        
         
 class AuthCompany(views.APIView):

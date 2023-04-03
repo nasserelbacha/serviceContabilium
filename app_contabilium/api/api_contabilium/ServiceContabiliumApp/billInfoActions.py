@@ -6,8 +6,8 @@ import json
 
 def getInfo(self, request, **args):
     infos = list(models.BillInfo.objects.filter(bill=args['billId']).values()) 
-    if len(coordinates) > 0:
-            datos = {'message': "Success", 'coordiantes': coordinates}
+    if len(infos) > 0:
+            datos = {'message': "Success", 'coordiantes': infos}
     else:
             datos = {'message': "bill not found..."}
     return JsonResponse(datos)

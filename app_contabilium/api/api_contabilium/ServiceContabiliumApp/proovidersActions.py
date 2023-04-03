@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from . import models
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
+import json
 
 def getProviders(self, request, **id):
     prooviders = list(models.Providers.objects.filter(company=id['id']).values())
