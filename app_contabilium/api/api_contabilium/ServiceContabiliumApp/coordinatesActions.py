@@ -30,10 +30,18 @@ def createCoordinate(self, request, **args):
                                     x2=jd['x2'],
                                     y1=jd['y1'],
                                     y2=jd['y2'])
-        readimage(jd)
+        readbase64(jd)
         return Response(jd)
     else:
         return JsonResponse({"result": "error", "message" : "mala aplicacion"})
+    
+def readbase64(jd):
+    codigo_base64 = jd['Image64']
+    imagen_bytes = base64.b64decode(codigo_base64)
+    imagen_numpy = np.frombuffer(imagen_bytes, np.uint8)
+    Image = cv2.imdecode(imagen_numpy, cv2.IMREAD_COLOR)
+    ROI = Image[jd['y1']:jd['y2'],jd['x1']:jd['x2'] ]
+    text = (pytesseract.image_to_string(ROI))
 
 def getCoordinateById(self, request, id):
     coordinate = list(models.Coordinates.objects.filter(id=id).values())
