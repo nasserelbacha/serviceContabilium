@@ -102,4 +102,3 @@ def readimage(image_path):
             numeros += caracter
     print(numeros)
     
-    tr
